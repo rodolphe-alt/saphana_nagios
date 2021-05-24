@@ -14,7 +14,7 @@ Help :<br>
 <br>
 Examples :<br>
   ```
-  ./check_saphana_health.sh --hostname <SAPHANAHOSTNAME> --username <SAPHANAUSER> --password <SAPHANAPASSWORD> --sqlport 30044 --mode backup_data<br>
+   ./check_saphana_health.sh --hostname <SAPHANAHOSTNAME> --username <SAPHANAUSER> --password <SAPHANAPASSWORD> --sqlport 30044 --mode backup_data<br>
   ./check_saphana_health.sh [..] --mode backup_log<br>
   ./check_saphana_health.sh [..] --mode db_data<br>
   ./check_saphana_health.sh [..] --mode cpu<br>
@@ -22,7 +22,6 @@ Examples :<br>
   ./check_saphana_health.sh [..] --mode services_all<br>
   ./check_saphana_health.sh [..] --mode alert<br>
   ```
-
 <hr>
 author : Rodolphe ALT<br>
 website : https://www.altr-consulting.com<br>
