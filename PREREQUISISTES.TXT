@@ -1,0 +1,117 @@
+list
+apt-get install python-pip
+apt install python-backports.functools-lru-cache
+pip install pyhdb
+pip install prettytable
+
+
+# Run tests
+pip install pytest mock
+py.test <program.py>
+
+
+-- on tenant with admin account
+CREATE USER TECH_MONI PASSWORD "UltraComplexPassword2020!";             -- Technical user for Python program
+ALTER USER TECH_MONI DISABLE PASSWORD LIFETIME;
+GRANT MONITORING to TECH_MONI;
+GRANT ABAP_READ to TECH_MONI;
+
+
+cat /usr/local/nagios/libexec/check_saphana_health.sh
+python /usr/local/nagios/libexec/check_saphana_health.py $@
+
+
+cat /usr/local/nagios/etc/resource.cfg
+# SAP HANA - sap_hana_server - HDB
+$USER7$=TECH_MONI
+$USER8$=UltraComplexPassword2020!
+
+cat /usr/local/nagios/etc/objects/commands.cfg
+define command{
+        command_name check_saphana_health
+        command_line $USER1$/check_saphana_health.sh --hostname=$ARG1$ --username=$ARG2$ --password=$ARG3$ --sqlport=$ARG4$ --mode=$ARG5$
+}
+
+
+cat /usr/local/nagios/etc/objects/linux.cfg
+######################
+# backup_data, backup_log , version, cpu, memory, mem_host, services, services_all, license_usage, db_data, db_log, db_trace, alert
+define service {
+        service_description     app_hana_database_backup_data
+        host_name       sap_hana_server
+        use             generic-service
+        check_command   check_saphana_health!$HOSTADDRESS$!$USER7$!$USER8$!30044!backup_data
+}
+define service {
+        service_description     app_hana_database_backup_log
+        host_name       sap_hana_server
+        use             generic-service
+        check_command   check_saphana_health!$HOSTADDRESS$!$USER7$!$USER8$!30044!backup_log
+}
+define service {
+        service_description     app_hana_database_version
+        host_name       sap_hana_server
+        use             generic-service
+        check_command   check_saphana_health!$HOSTADDRESS$!$USER7$!$USER8$!30044!version
+}
+define service {
+        service_description     app_hana_database_cpu
+        host_name       sap_hana_server
+        use             generic-service
+        check_command   check_saphana_health!$HOSTADDRESS$!$USER7$!$USER8$!30044!cpu
+}
+define service {
+        service_description     app_hana_database_memory
+        host_name       sap_hana_server
+        use             generic-service
+        check_command   check_saphana_health!$HOSTADDRESS$!$USER7$!$USER8$!30044!memory
+}
+define service {
+        service_description     app_hana_database_mem_host
+        host_name       sap_hana_server
+        use             generic-service
+        check_command   check_saphana_health!$HOSTADDRESS$!$USER7$!$USER8$!30044!mem_host
+}
+define service {
+        service_description     app_hana_database_services
+        host_name       sap_hana_server
+        use             generic-service
+        check_command   check_saphana_health!$HOSTADDRESS$!$USER7$!$USER8$!30044!services
+}
+define service {
+        service_description     app_hana_database_services_all
+        host_name       sap_hana_server
+        use             generic-service
+        check_command   check_saphana_health!$HOSTADDRESS$!$USER7$!$USER8$!30044!services_all
+}
+define service {
+        service_description     app_hana_database_license_usage
+        host_name       sap_hana_server
+        use             generic-service
+        check_command   check_saphana_health!$HOSTADDRESS$!$USER7$!$USER8$!30044!license_usage
+}
+define service {
+        service_description     app_hana_database_db_data
+        host_name       sap_hana_server
+        use             generic-service
+        check_command   check_saphana_health!$HOSTADDRESS$!$USER7$!$USER8$!30044!db_data
+}
+define service {
+        service_description     app_hana_database_db_log
+        host_name       sap_hana_server
+        use             generic-service
+        check_command   check_saphana_health!$HOSTADDRESS$!$USER7$!$USER8$!30044!db_log
+}
+define service {
+        service_description     app_hana_database_db_trace
+        host_name       sap_hana_server
+        use             generic-service
+        check_command   check_saphana_health!$HOSTADDRESS$!$USER7$!$USER8$!30044!db_trace
+}
+define service {
+        service_description     app_hana_database_alert
+        host_name       sap_hana_server
+        use             generic-service
+        check_command   check_saphana_health!$HOSTADDRESS$!$USER7$!$USER8$!30044!alert
+}
+
