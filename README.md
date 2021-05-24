@@ -1,4 +1,4 @@
-# saphana_nagios
+# SAP HANA Nagios plugin
 plug in Nagios to able monitor SAP HANA database<br>
 <br>
 <img src="https://github.com/rodolphe-alt/saphana_nagios/blob/main/images/demo_saphana_nagios_plugin.JPG">
