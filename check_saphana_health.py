@@ -115,7 +115,7 @@ if args.mode == "memory":
     if resultat_per_num <=80: resultat_status="OK"
     elif resultat_per_num >= 90: resultat_status="CRITICAL"
     elif resultat_per_num > 80 and resultat_per_num < 90: resultat_status="WARNING"
-    print ("%s - SAP HANA Used Memory (%s) : %s MB Used / %s MB Allocated | mem=%sMB;%s;%s;0;%s" % (resultat_status,resultat_percentage,resultat_0,resultat_1,resultat_0,resultat_1_80,resultat_1_90,resultat_1))
+    print ("%s - SAP HANA Used Memory (%s) : %s GB Used / %s GB Allocated | mem=%sMB;%s;%s;0;%s" % (resultat_status,resultat_percentage,resultat_0,resultat_1,resultat_0,resultat_1_80,resultat_1_90,resultat_1))
     function_exit(resultat_status)
 
 if args.mode == "services":
