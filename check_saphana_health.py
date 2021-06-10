@@ -1,7 +1,7 @@
 # coding=utf-8
 ################################################
 # Rodolphe ALT
-# 0.1
+# 0.1b
 # goal : check SAP HANA database from Nagios
 #################################################
 # hostname = sap_hana_server
@@ -41,7 +41,7 @@ if __name__ == '__main__':
     requiredNamed.add_argument('--username', help = "SAP HANA login", required=True)
     requiredNamed.add_argument('--password', help = "SAP HANA password", required=True)
     requiredNamed.add_argument('--sqlport', help = "SAP HANA SQL port", required=True)
-    requiredNamed.add_argument('--mode', help = "backup_data, backup_log , version, cpu, memory, mem_host, services, services_all, license_usage, db_data, db_log, db_trace, alert", required=True)
+    requiredNamed.add_argument('--mode', help = "backup_data, backup_log , version, cpu, memory, mem_host, services, services_all, license_usage, db_data, db_log, db_trace, alert, sid", required=True)
     requiredNamed.add_argument('--timeout', help = "increase the default (60s) timeout")
     args = parser.parse_args(sys.argv[1:])
 
@@ -199,6 +199,12 @@ if args.mode == "alert":
         print ("%s - SAP HANA Alerts : %s " % (resultat_0,resultat_1))
     function_exit(resultat_0)
 
+if args.mode == "sid":
+    # check SAP HANA SID
+    command_sql = "select top 1 DATABASE_NAME from SYS.M_DATABASES where ACTIVE_STATUS='YES';"
+    cursor.execute(command_sql)
+    resultat = cursor.fetchone()
+    print ("OK - SAP HANA SID : %s |\n|" % resultat)
 
 
 connection.commit()
