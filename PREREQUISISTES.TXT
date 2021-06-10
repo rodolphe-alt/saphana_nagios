@@ -114,4 +114,9 @@ define service {
         use             generic-service
         check_command   check_saphana_health!$HOSTADDRESS$!$USER7$!$USER8$!30044!alert
 }
-
+define service {
+	service_description	app_hana_database_sid
+	host_name	hodes
+	use		generic-service
+	check_command	check_saphana_health!$HOSTADDRESS$!$USER7$!$USER8$!30044!sid
+}
