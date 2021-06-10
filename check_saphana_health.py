@@ -103,11 +103,12 @@ if args.mode == "version":
 
 if args.mode == "memory":
     # check SAP HANA memory
-    command_sql = "SELECT LPAD(TO_DECIMAL(ROUND(SUM(INSTANCE_TOTAL_MEMORY_USED_SIZE) OVER () / 1024 / 1024 / 1024), 10, 0), 9) as \"HANA instance memory (used)\", LPAD(TO_DECIMAL(ROUND(SUM(INSTANCE_TOTAL_MEMORY_ALLOCATED_SIZE) OVER () / 1024 / 1024 / 1024), 10, 0), 9) as \"HANA instance memory (allocated)\" FROM M_HOST_RESOURCE_UTILIZATION"
+    command_sql = "SELECT LPAD(TO_DECIMAL(ROUND(SUM(INSTANCE_TOTAL_MEMORY_USED_SIZE) OVER () / 1024 / 1024 / 1024), 10, 0), 9) as \"HANA instance memory (used)\", LPAD(TO_DECIMAL(ROUND(SUM(INSTANCE_TOTAL_MEMORY_ALLOCATED_SIZE) OVER () / 1024 / 1024 / 1024), 10, 0), 9) as \"HANA instance memory (allocated)\", LPAD(TO_DECIMAL(ROUND(SUM(ALLOCATION_LIMIT) OVER () / 1024 / 1024 / 1024), 10, 0), 9) as \"HANA instance memory (limit)\" FROM M_HOST_RESOURCE_UTILIZATION"
     cursor.execute(command_sql)
     resultat = cursor.fetchone()
     resultat_0 = int(resultat[0])
     resultat_1 = int(resultat[1])
+    resultat_2 = int(resultat[2])
     resultat_1_80 = format(resultat_1 * 80 / 100)
     resultat_1_90 = format(resultat_1 * 90 / 100)
     resultat_percentage = "{0:.0%}".format(1. * resultat_0/resultat_1)
@@ -115,7 +116,7 @@ if args.mode == "memory":
     if resultat_per_num <=80: resultat_status="OK"
     elif resultat_per_num >= 90: resultat_status="CRITICAL"
     elif resultat_per_num > 80 and resultat_per_num < 90: resultat_status="WARNING"
-    print ("%s - SAP HANA Used Memory (%s) : %s GB Used / %s GB Allocated | mem=%sMB;%s;%s;0;%s" % (resultat_status,resultat_percentage,resultat_0,resultat_1,resultat_0,resultat_1_80,resultat_1_90,resultat_1))
+    print ("%s - SAP HANA Used Memory (%s) : %s GB Used / %s GB Allocated / %s GB Limit | mem=%sMB;%s;%s;0;%s" % (resultat_status,resultat_percentage,resultat_0,resultat_1,resultat_2,resultat_0,resultat_1_80,resultat_1_90,resultat_1))
     function_exit(resultat_status)
 
 if args.mode == "services":
