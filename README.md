@@ -19,6 +19,7 @@ plug in Nagios to able monitor SAP HANA database<br>
   ./check_saphana_health.sh [..] --mode mem_host
   ./check_saphana_health.sh [..] --mode services_all
   ./check_saphana_health.sh [..] --mode alert
+  ./check_saphana_health.sh [..] --mode sid
 ```
 => see PREREQUISITES.TXT<br>
 
