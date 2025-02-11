@@ -1,7 +1,7 @@
 list
 apt-get install python-pip
 apt install python-backports.functools-lru-cache
-pip install pyhdb
+pip install hdbcli
 pip install prettytable
 
 
