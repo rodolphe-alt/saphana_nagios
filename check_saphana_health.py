@@ -15,7 +15,7 @@
 
 
 import sys
-import pyhdb
+from hdbcli import dbapi
 import argparse
 from prettytable import PrettyTable
 
@@ -45,7 +45,7 @@ if __name__ == '__main__':
     requiredNamed.add_argument('--timeout', help = "increase the default (60s) timeout")
     args = parser.parse_args(sys.argv[1:])
 
-connection = pyhdb.connect(args.hostname, args.sqlport, args.username, args.password)
+connection = dbapi.connect(args.hostname, args.sqlport, args.username, args.password)
 if args.timeout != None: connection.timeout = int(args.timeout)
 cursor = connection.cursor()
 
@@ -57,7 +57,7 @@ if args.mode == "backup_data":
     last_successful_backup = ''
     last_successful_detail = ''
     if resultat[0] > 0:
-        command_sql = "SELECT top 1 sys_start_time FROM SYS.M_BACKUP_CATALOG where entry_type_name = 'complete data backup' and state_name='successful'order by entry_id asc;"
+        command_sql = "SELECT top 1 sys_start_time FROM SYS.M_BACKUP_CATALOG where entry_type_name = 'complete data backup' and state_name='successful'order by entry_id desc;"
         cursor.execute(command_sql)
         last_successful_backup = (cursor.fetchone())
         resultat_status = 'OK'
@@ -76,7 +76,7 @@ if args.mode == "backup_log":
     last_successful_backup = ''
     last_successful_detail = ''
     if resultat[0] > 0:
-        command_sql = "SELECT top 1 sys_start_time FROM SYS.M_BACKUP_CATALOG where entry_type_name = 'log backup' and state_name='successful' order by entry_id asc;"
+        command_sql = "SELECT top 1 sys_start_time FROM SYS.M_BACKUP_CATALOG where entry_type_name = 'log backup' and state_name='successful' order by entry_id desc;"
         cursor.execute(command_sql)
         last_successful_backup = (cursor.fetchone())
         resultat_status = 'OK'
