@@ -15,7 +15,7 @@
 
 
 import sys
-import pyhdb
+from hdbcli import dbapi
 import argparse
 from prettytable import PrettyTable
 
@@ -45,7 +45,7 @@ if __name__ == '__main__':
     requiredNamed.add_argument('--timeout', help = "increase the default (60s) timeout")
     args = parser.parse_args(sys.argv[1:])
 
-connection = pyhdb.connect(args.hostname, args.sqlport, args.username, args.password)
+connection = dbapi.connect(args.hostname, args.sqlport, args.username, args.password)
 if args.timeout != None: connection.timeout = int(args.timeout)
 cursor = connection.cursor()
 
